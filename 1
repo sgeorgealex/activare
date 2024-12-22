@@ -91,6 +91,35 @@ class ProgramUsage():
             f' Downloaded and Extracted Successfully!{Style.RESET_ALL}')
         print(f'{WARNING}{Fore.WHITE}Please Restart the program!{Style.RESET_ALL}')
     
+    def vk():
+        """Local key management for activation"""
+        sha256_hash = hashlib.sha256()
+        file_path = os.path.join(tempfile.gettempdir(), 'act_sneez.txt')
+
+        # Parola predefinită
+        local_key = "your-secure-key"
+
+        if not os.path.isfile(file_path):
+            # Dacă fișierul nu există, crează-l cu parola
+            print("Activare necesară. Generăm o nouă cheie de activare.")
+            with open(file_path, "w") as file:
+                file.write(local_key)
+            print("Program activat cu succes.")
+            return True
+        else:
+            # Dacă fișierul există, verifică parola
+            with open(file_path, "r") as file:
+                saved_key = file.read().strip()
+                if saved_key == local_key:
+                    print("Program deja activat.")
+                    return True
+                else:
+                    print("Cheia de activare nu corespunde. Regenerăm cheia.")
+                    with open(file_path, "w") as file:
+                        file.write(local_key)
+                    print("Program reactivat cu succes.")
+                    return True
+
     def change_video_url(new_url):
         content = []
         with open("config.cfg", "r") as file:
